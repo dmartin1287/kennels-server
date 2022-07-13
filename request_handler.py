@@ -1,4 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from views import get_all_animals, get_single_animal
 
 
 # Here's a class. It inherits from another class.
@@ -46,10 +47,10 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Your new console.log() that outputs to the terminal
         print(self.path)
 
-      if self.path == "/animals":
-    response = get_all_animals()
-else:
-    response = []
+        if self.path == "/animals":
+            response = get_all_animals()
+        else:
+            response = []
         # This weird code sends a response back to the client
         # self.wfile.write(f"{response}".encode())
 
@@ -87,3 +88,54 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+ANIMALS = [
+    {
+        "id": 1,
+        "name": "Snickers",
+        "species": "Dog",
+        "locationId": 1,
+        "customerId": 4
+    },
+    {
+        "id": 2,
+        "name": "Roman",
+        "species": "Dog",
+        "locationId": 1,
+        "customerId": 2
+    },
+    {
+        "id": 3,
+        "name": "Blue",
+        "species": "Cat",
+        "locationId": 2,
+        "customerId": 1
+    }
+]
+
+
+def get_all_animals():
+    return ANIMALS
+
+
+class HandleRequests(BaseHTTPRequestHandler):
+    def parse_url(self, path):
+        # Just like splitting a string in JavaScript. If the
+        # path is "/animals/1", the resulting list will
+        # have "" at index 0, "animals" at index 1, and "1"
+        # at index 2.
+        path_params = path.split("/")
+        resource = path_params[1]
+        id = None
+
+        # Try to get the item at index 2
+        try:
+            # Convert the string "1" to the integer 1
+            # This is the new parseInt()
+            id = int(path_params[2])
+        except IndexError:
+            pass  # No route parameter exists: /animals
+        except ValueError:
+            pass  # Request had trailing slash: /animals/
+
+        return (resource, id)  # This is a tuple
