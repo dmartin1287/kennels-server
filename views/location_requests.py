@@ -7,7 +7,7 @@ LOCATIONS = [
     {
         "id": 2,
         "name": "East Nashville",
-        "address": "1039 Riverside Drive"
+        "address": "109 Riverside Drive"
     }
 ]
 
