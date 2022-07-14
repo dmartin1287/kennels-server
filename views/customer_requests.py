@@ -8,6 +8,16 @@ CUSTOMERS = [
         "id": 2,
         "fullname": "Yasuda Fujiko",
         "email": "Yasuda28@yahoo.com"
+    },
+    {
+        "id": 3,
+        "fullname": "Illumi Zoldyck",
+        "email": "IllumiZ@gmail.com"
+    },
+    {
+        "id": 4,
+        "fullname": "Sakura Kidamora",
+        "email": "SakuraK@gmail.com"
     }
 ]
 
