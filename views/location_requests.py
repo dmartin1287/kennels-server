@@ -1,22 +1,25 @@
-import sqlite3
 import json
+import sqlite3
 from models import Location
-
 
 LOCATIONS = [
     {
         "id": 1,
-        "name": "North Nashville",
-        "address": "7422 Central Pike"
+        "name": "Nashville North",
+        "address": "8422 Johnson Pike"
     },
     {
         "id": 2,
-        "name": "East Nashville",
-        "address": "109 Riverside Drive"
+        "name": "Nashville South",
+        "address": "209 Emory Drive"
     }
 ]
 
+
 def get_all_locations():
+    """
+    THIS FUNCTION GETS ALL LOCATIONS
+    """
     # Open a connection to the database
     with sqlite3.connect("./kennel.sqlite3") as conn:
 
@@ -53,7 +56,11 @@ def get_all_locations():
     # Use `json` package to properly serialize list as JSON
     return json.dumps(locations)
 
+
 def get_single_location(id):
+    """
+    THIS FUNCTION GETS ONE LOCATION BY ITS ID
+    """
     with sqlite3.connect("./kennel.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
@@ -67,18 +74,25 @@ def get_single_location(id):
             a.address
         FROM location a
         WHERE a.id = ?
-        """, ( id, ))
+        """, (id, ))
 
         # Load the single result into memory
         data = db_cursor.fetchone()
 
-        # Create an location instance from the current row
+        # Create a location instance from the current row
         location = Location(data['id'], data['name'], data['address'])
 
         return json.dumps(location.__dict__)
 
 
 def create_location(location):
+    """
+    PASS A LOCATION DICTIONARY INTO THE FUNCTION. THIS FUNCTION SEES WHAT THE ID OF 
+    THE LAST LOCATION IN LOCATIONS IS, 
+    ADDS THAT ID TO LOCATION DICTIONARY THAT WAS PASSED IN.
+    ADD NEW LOCATION DICTIONARY TO LIST.
+    """
+
     # Get the id value of the last location in the list
     max_id = LOCATIONS[-1]["id"]
 
@@ -94,22 +108,22 @@ def create_location(location):
     # Return the dictionary with `id` property added
     return location
 
+
 def delete_location(id):
-    # Initial -1 value for location index, in case one isn't found
-    location_index = -1
+    """DELETE LOCATION
+    """
+    with sqlite3.connect("./kennel.sqlite3") as conn:
+        db_cursor = conn.cursor()
 
-    # Iterate the LOCATIONS list, but use enumerate() so that you
-    # can access the index value of each item
-    for index, location in enumerate(LOCATIONS):
-        if location["id"] == id:
-            # Found the location. Store the current index.
-            location_index = index
+        db_cursor.execute("""
+        DELETE FROM location
+        WHERE id = ?
+        """, (id, ))
 
-    # If the location was found, use pop(int) to remove it from list
-    if location_index >= 0:
-        LOCATIONS.pop(location_index)
 
 def update_location(id, new_location):
+    """UPDATE LOCATIONS FUNCTION
+    """
     # Iterate the LOCATIONS list, but use enumerate() so that
     # you can access the index value of each item.
     for index, location in enumerate(LOCATIONS):

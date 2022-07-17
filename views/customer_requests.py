@@ -22,11 +22,19 @@ CUSTOMERS = [
         "id": 4,
         "fullname": "Sakura Kidamora",
         "email": "SakuraK@gmail.com"
+    },
+    {
+        "id": 5,
+        "fullname": "Hisoka Morrow",
+        "email": "HisokaM@yahoo.com"
     }
 ]
 
 
 def get_all_customers():
+    """
+    THIS FUNCTION GETS ALL CUSTOMERS
+    """
     # Open a connection to the database
     with sqlite3.connect("./kennel.sqlite3") as conn:
 
@@ -68,6 +76,9 @@ def get_all_customers():
 
 
 def get_single_customer(id):
+    """
+    THIS FUNCTION GETS ONE customer BY ITS ID
+    """
     with sqlite3.connect("./kennel.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
@@ -88,58 +99,16 @@ def get_single_customer(id):
         # Load the single result into memory
         data = db_cursor.fetchone()
 
-        # Create an customer instance from the current row
+        # Create a customer instance from the current row
         customer = Customer(data['id'], data['name'], data['address'],
                             data['email'], data['password'])
 
         return json.dumps(customer.__dict__)
 
 
-def create_customer(customer):
-    # Get the id value of the last customer in the list
-    max_id = CUSTOMERS[-1]["id"]
-
-    # Add 1 to whatever that number is
-    new_id = max_id + 1
-
-    # Add an `id` property to the customer dictionary
-    customer["id"] = new_id
-
-    # Add the customer dictionary to the list
-    CUSTOMERS.append(customer)
-
-    # Return the dictionary with `id` property added
-    return customer
-
-
-def delete_customer(id):
-    # Initial -1 value for customer index, in case one isn't found
-    customer_index = -1
-
-    # Iterate the CUSTOMERS list, but use enumerate() so that you
-    # can access the index value of each item
-    for index, customer in enumerate(CUSTOMERS):
-        if customer["id"] == id:
-            # Found the customer. Store the current index.
-            customer_index = index
-
-    # If the customer was found, use pop(int) to remove it from list
-    if customer_index >= 0:
-        CUSTOMERS.pop(customer_index)
-
-
-def update_customer(id, new_customer):
-    # Iterate the CUSTOMERS list, but use enumerate() so that
-    # you can access the index value of each item.
-    for index, customer in enumerate(CUSTOMERS):
-        if customer["id"] == id:
-            # Found the customer. Update the value.
-            CUSTOMERS[index] = new_customer
-            break
-
-
-def get_customer_by_email(email):
-
+def get_customers_by_email(email):
+    """PUT AN EMAIL IN, GET A CUSTOMER BACK. ITS SIMPLE. right?
+    """
     with sqlite3.connect("./kennel.sqlite3") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
@@ -160,8 +129,56 @@ def get_customer_by_email(email):
         dataset = db_cursor.fetchall()
 
         for row in dataset:
-            customer = Customer(
-                row['id'], row['name'], row['address'], row['email'], row['password'])
+            customer = Customer(row['id'], row['name'], row['address'],
+                                row['email'], row['password'])
             customers.append(customer.__dict__)
 
     return json.dumps(customers)
+
+
+def create_customer(customer):
+    """
+    PASS A customer DICTIONARY INTO THE FUNCTION. THIS FUNCTION SEES WHAT THE ID OF 
+    THE LAST customer IN CUSTOMERS IS, 
+    ADDS THAT ID TO customer DICTIONARY THAT WAS PASSED IN.
+    ADD NEW customer DICTIONARY TO LIST.
+    """
+
+    # Get the id value of the last customer in the list
+    max_id = CUSTOMERS[-1]["id"]
+
+    # Add 1 to whatever that number is
+    new_id = max_id + 1
+
+    # Add an `id` property to the customer dictionary
+    customer["id"] = new_id
+
+    # Add the customer dictionary to the list
+    CUSTOMERS.append(customer)
+
+    # Return the dictionary with `id` property added
+    return customer
+
+
+def delete_customer(id):
+    """DELETE CUSTOMER
+    """
+    with sqlite3.connect("./kennel.sqlite3") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM customer
+        WHERE id = ?
+        """, (id, ))
+
+
+def update_customer(id, new_customer):
+    """UPDATE CUSTOMERS FUNCTION
+    """
+    # Iterate the CUSTOMERS list, but use enumerate() so that
+    # you can access the index value of each item.
+    for index, customer in enumerate(CUSTOMERS):
+        if customer["id"] == id:
+            # Found the customer. Update the value.
+            CUSTOMERS[index] = new_customer
+            break

@@ -1,4 +1,6 @@
 class Location():
+    """LOCATION CLASS
+    """
 
     def __init__(self, id, name, address):
         self.id = id
