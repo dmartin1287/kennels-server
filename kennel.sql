@@ -37,13 +37,11 @@ INSERT INTO `Location` VALUES (null, 'Nashville North', "64 Washington Heights")
 INSERT INTO `Location` VALUES (null, 'Nashville South', "101 Penn Ave");
 
 
-INSERT INTO `Employee` VALUES (null, "Madi Peper", "35498 Madison Ave", 1);
-INSERT INTO `Employee` VALUES (null, "Kristen Norris", "100 Main St", 1);
-INSERT INTO `Employee` VALUES (null, "Pam Beesly", "600 Central St", 1);
-INSERT INTO `Employee` VALUES (null, "Hisoka Morrow", "404 Unknown Ct", 2);
+INSERT INTO `Employee` VALUES (null, "Dwight Schrute", "35498 Madison Ave", 1);
+INSERT INTO `Employee` VALUES (null, "Hisoka Morrow", "100 Main St", 1);
 INSERT INTO `Employee` VALUES (null, "Christina Miller", "204 Empty Ave", 1);
 INSERT INTO `Employee` VALUES (null, "Michael Scott", "200 Success Way", 2);
-INSERT INTO `Employee` VALUES (null, "Dwight Schrute", "800 Wayside Way", 2);
+INSERT INTO `Employee` VALUES (null, "Pam Beesly", "800 Wayside Way", 2);
 INSERT INTO `Employee` VALUES (null, "Illumi Zoldyck", "306 Internal Error Blvd", 2);
 
 
