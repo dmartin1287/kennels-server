@@ -3,6 +3,8 @@ CREATE TABLE `Location` (
 	`name`	TEXT NOT NULL,
 	`address`	TEXT NOT NULL
 );
+INSERT INTO `Location` VALUES (null, 'Nashville North', "64 Washington Heights");
+INSERT INTO `Location` VALUES (null, 'Nashville South', "101 Penn Ave");
 
 CREATE TABLE `Customer` (
     `id`    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -11,6 +13,13 @@ CREATE TABLE `Customer` (
     `email`    TEXT NOT NULL,
     `password`    TEXT NOT NULL
 );
+
+INSERT INTO `Customer` VALUES (null, "Mo Silvera", "201 Created St", "mo@silvera.com", "password");
+INSERT INTO `Customer` VALUES (null, "Bryan Nilsen", "500 Internal Error Blvd", "bryan@nilsen.com", "password");
+INSERT INTO `Customer` VALUES (null, "Jenna Solis", "301 Redirect Ave", "jenna@solis.com", "password");
+INSERT INTO `Customer` VALUES (null, "Emily Lemmon", "454 Mulberry Way", "emily@lemmon.com", "password");
+INSERT INTO `Customer` VALUES (null, "Kitty Purry", "568 Fluffytails Blvd", "kitty@purry.com", "password");
+INSERT INTO `Customer` VALUES (null, "Sakura Kidamora", "128 Coding Blvd", "SK1287@coding.com", "password");
 
 CREATE TABLE `Animal` (
 	`id`  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -23,7 +32,6 @@ CREATE TABLE `Animal` (
 	FOREIGN KEY(`location_id`) REFERENCES `Location`(`id`)
 );
 
-
 CREATE TABLE `Employee` (
 	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	`name`	TEXT NOT NULL,
@@ -33,8 +41,7 @@ CREATE TABLE `Employee` (
 
 );
 
-INSERT INTO `Location` VALUES (null, 'Nashville North', "64 Washington Heights");
-INSERT INTO `Location` VALUES (null, 'Nashville South', "101 Penn Ave");
+
 
 
 INSERT INTO `Employee` VALUES (null, "Dwight Schrute", "35498 Madison Ave", 1);
@@ -45,13 +52,6 @@ INSERT INTO `Employee` VALUES (null, "Pam Beesly", "800 Wayside Way", 2);
 INSERT INTO `Employee` VALUES (null, "Illumi Zoldyck", "306 Internal Error Blvd", 2);
 
 
-
-INSERT INTO `Customer` VALUES (null, "Mo Silvera", "201 Created St", "mo@silvera.com", "password");
-INSERT INTO `Customer` VALUES (null, "Bryan Nilsen", "500 Internal Error Blvd", "bryan@nilsen.com", "password");
-INSERT INTO `Customer` VALUES (null, "Jenna Solis", "301 Redirect Ave", "jenna@solis.com", "password");
-INSERT INTO `Customer` VALUES (null, "Emily Lemmon", "454 Mulberry Way", "emily@lemmon.com", "password");
-INSERT INTO `Customer` VALUES (null, "Kitty Purry", "568 Fluffytails Blvd", "kitty@purry.com", "password");
-INSERT INTO `Customer` VALUES (null, "Sakura Kidamora", "128 Coding Blvd", "SK1287@coding.com", "password");
 
 
 
